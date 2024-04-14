@@ -27,11 +27,9 @@ function App() {
 
 
   return (
-    <>
-      {data.name}<br></br>
-      {data.email}<br></br>
-      {data.password}
-    </>
+    <div>
+      App
+    </div>
   )
 }
 
