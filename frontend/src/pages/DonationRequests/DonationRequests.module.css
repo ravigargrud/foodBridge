@@ -1,13 +1,183 @@
-.availableFoodBanks {
+.topFiller {
+    height: 80px;
+    z-index: 10;
+}
+.sideFiller {
+    width: 175px;
+    z-index: 5;
+    height: 100vh;
+}
+
+.availableRestaurants {
+    display: flex;
+    background-image: url('../../assets/images/landingpage/signup.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.newDonation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.main .cards {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 75%;
+}
+
+.main .card {
+    background-color: #f4f6f6;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    gap: 50px;
+    min-width: 33%;
+    margin-left: 5px;
+    padding: 1rem 0;
+    border-radius: 15px;
 }
 
-.cards {
-    cursor: pointer;
+.container {
+    border-bottom: 1px solid #ededed;
+}
+
+.card .cardTop {
+    max-width: 100%;
+}
+
+.cardTop h1 {
     width: 100%;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.cardTop p {
+    padding: 0.5rem;
+    color: #626262;
+    text-align: left;
+}
+
+.card .cardBottom {
+    background-color: white;
+    min-width: 95%;
+    border-radius: 10px;
+    padding: 1rem;
+    height: 30rem;
+    overflow: auto;
+}
+
+
+.cardBottom p{
+    color: #999999;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+}
+.container h1 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+.container button {
+    background-color: #099a4f;
+    max-height: 3rem;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+.containerDiv {
+    display: flex;
+    flex-direction: column;
+    flex:1;
+}
+
+/*Donation*/
+.closeIcon {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 0.5rem 0;
+}
+.closeIconImg {
+    cursor: pointer;
+}
+
+
+.newDonation2 {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+    height: 100%;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newDonation2 .newDonationDiv {
+    background-color: #ededed;
+    height: 70%;
+    min-width: 45%;
+    padding: 0 2rem;
+}
+
+.newDonationDiv form {
+    display: flex;
+    flex-direction: column;
+}
+.newDonationDiv form input {
+    color: black;
+    padding: 0.5rem;
+    border: 1px solid #d7d2d2;
+    border-radius: 5px;
+}
+.newDonationDiv .donationType label {
+    color: black;
+    cursor: pointer;
+    user-select: none;
+    margin: 1rem 0;
+}
+.newDonationDiv .donationType label input {
+    margin-left: 1rem;
+}
+.newDonationDiv .donationType {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.wastage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: dashed 1px #d7d2d2;
+    min-height: 10rem;
+}
+
+@media (min-width: 1440px) {
+    .main {
+        padding: 0 5rem;
+    }
+
 }

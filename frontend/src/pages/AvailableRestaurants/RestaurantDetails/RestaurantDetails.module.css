@@ -1,0 +1,159 @@
+.details {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background-color: white;
+    min-width: 45%;
+    margin-top: 5rem;
+    min-height: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.top {
+    border-bottom: 1px solid #ededed;
+}
+
+
+.top div {
+    width: auto;
+}
+
+.top .heading {
+    flex: 1;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.top .heading h1{
+    margin-bottom: 0.5rem;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.top p {
+    color: #666666;
+}
+
+.topButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.closeIcon {
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+}
+
+
+.topButtons button{
+    background-color: #AE076B;
+    margin-top: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.listedOn {
+    display: flex;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.top .listedOn p:first-child {
+    width: 4rem;
+}
+.top .listedOn p:last-child{
+    color: black;
+    width: auto;    
+    margin-left: 1rem;
+}
+
+/*Bottom*/
+.bottom {
+    padding: 1rem;
+    display: flex;
+    border-bottom: 1px solid #ededed;
+}
+.bottom ul {
+    list-style-type: none;
+}
+.left {
+    min-width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.left h2 {
+    color: black;
+}
+.left p {
+    color: #666666;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.right {
+    min-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.bottom ul {
+    padding: 0;
+    padding-left: 3rem;
+    padding-top: 3rem;
+    width: 100%;
+    height: 100%;
+}
+.bottom ul li {
+    color: black;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+.bottom ul li p {
+    text-align: center;
+}
+
+/*button*/
+
+.request {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+.request button {
+    background-color: #05A60B;
+    border: none;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    width: 25%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
