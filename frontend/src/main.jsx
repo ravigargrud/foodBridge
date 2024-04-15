@@ -27,8 +27,10 @@ const router = createBrowserRouter([
             <>
                 <TopNavbar showNavbar={true} />
                 <Signup />
+                
             </>
         ),
+        errorElement: <div>Please go to Home Page first</div>
     },
     {
         path: "/availablerestaurants/:profileId",

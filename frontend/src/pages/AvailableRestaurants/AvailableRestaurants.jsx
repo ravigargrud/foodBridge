@@ -7,17 +7,28 @@ import TopNavbar from "../../pages/TopNavbar/TopNavbar.jsx";
 import SideNavbar from "../SideNavbar/SideNavbar.jsx";
 import RestaurantDetails from "./RestaurantDetails/RestaurantDetails.jsx";
 
-import { useState } from "react";
-
-const restaurants = [
-    { name: "a", wastage: `150kg` },
-    { name: "b", wastage: `100kg` },
-    { name: "c", wastage: `250kg` },
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AvailableRestaurants = () => {
     const [showDetails, setShowDetails] = useState(true);
-    const [, setClickedIndex] = useState(null);
+    const [clickedIndex , setClickedIndex] = useState(null);
+
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/restaurant/get")
+            .then((response) => {
+                setData(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     function showDetailsHandler() {
         setShowDetails(!showDetails);
@@ -47,14 +58,14 @@ const AvailableRestaurants = () => {
                         <div className={classes.card}>
                             <Time className={classes.time} />
                             <img src={MAP} alt="map" />
-                            {restaurants.map((restaurant, index) => {
+                            {data.map((restaurant, index) => {
                                 return (
                                     <div
                                         key={index}
                                         className={classes.details}
                                     >
                                         <div className={classes.left}>
-                                            <h1>{restaurant.name}</h1>
+                                            <h1>{restaurant.restaurantName}</h1>
                                             <p>1.2 kms (For 150)</p>
                                         </div>
                                         <div className={classes.right}>

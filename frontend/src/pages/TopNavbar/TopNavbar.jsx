@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import classes from "./TopNavbar.module.css";
 
-import LOGO from '../../assets/react.svg';
+import LOGO from '../../assets/logo.png';
 
 export default function TopNavbar({ showNavbar, userName, location }) {
     if (!showNavbar) {
