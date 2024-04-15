@@ -1,0 +1,112 @@
+.filler {
+    height: 80px;
+}
+
+.signup {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../../assets/images/landingpage/signup.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.signupContainer {
+    background-color: #F5F5F5;
+    min-width: 40%;
+    height: auto;
+    padding: 2rem 5rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signupContainer input,
+.signupContainer h1,
+.signupContainer select,
+.signupContainer p,
+.signup option {
+    color: black;
+}
+
+.signupContainer h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.signupContainer p {
+    text-align: center;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.signupContainer form {
+    margin-top: 2rem;
+}
+
+.signupContainer input {
+    width: 100%;
+    border: 1px solid rgb(150, 145, 145);
+    padding: 0.5rem;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.signupContainer input:focus {
+    border: 1px solid #099A4F;
+}
+
+.signupContainer select {
+    width: 100%;
+    border: 1px solid rgb(150, 145, 145);
+    padding: 0.5rem;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.existingUser {
+    display: flex;
+    color: black;
+    align-items: center;
+    margin-top: 1rem;
+}
+.existingUser label {
+    color: black;
+    cursor: pointer;
+}
+.existingUser input {
+    width: auto;
+    margin-top: 0;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.btnContainer {
+    background-color: red;
+    width: 100%;
+}
+
+.signupContainer button {
+    background-color: #099A4F;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+    width: 10rem;
+    padding: 1rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+
+.link {
+    color: black;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    opacity: 0.5;
+    align-self: flex-end; 
+    margin-top: 2rem;
+}

@@ -1,0 +1,13 @@
+.availableFoodBanks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 50px;
+}
+
+.cards {
+    cursor: pointer;
+    width: 100%;
+}

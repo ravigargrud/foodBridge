@@ -1,36 +1,54 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
+import classes from "./App.module.css";
+import NOODLE from "./assets/images/landingpage/noodle.svg";
 // get user record from /user/{id} api on port 8000
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [currentImg, setCurrentImg] = useState(() =>
+        Math.floor(Math.random() * 2)
+    );
 
-  const[data, setData] = useState({})
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/getUser/1')
-      .then(response => {
-        // handle the response data
-        // console.log(response.data.email);
-        setData(response.data)
-      })
-      .catch(error => {
-        // handle the error
-        console.error(error);
-      });
-  }, []);
+    return (
+        <div className={classes.landingPage}>
+            <div
+                className={`${classes.left} ${
+                    currentImg === 0 ? classes.left1 : classes.left2
+                }`}
+            ></div>
 
-
-
-  return (
-    <div>
-      App
-    </div>
-  )
+            <div className={classes.right}>
+                <h1>FOOD BRIDGE</h1>
+                <p>Bridging the Gap between Abundance and Need.</p>
+                <div className={classes.btnContainer}>
+                    <button
+                        className={classes.link}
+                        onClick={() => {
+                            navigate("/signup", {
+                                state: { userType: "foodBank" },
+                            });
+                        }}
+                    >
+                        FOOD BANK ACCESS
+                    </button>
+                    <button
+                        className={classes.link}
+                        onClick={() => {
+                            navigate("/signup", {
+                                state: { userType: "restaurant" },
+                            });
+                        }}
+                    >
+                        RESTAURANT ACCESS
+                    </button>
+                </div>
+                <img src={NOODLE} alt="noodle" />
+            </div>
+        </div>
+    );
 }
 
-export default App
+export default App;
