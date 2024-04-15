@@ -1,6 +1,5 @@
 import classes from "./DonationRequests.module.css";
 
-import FoodBankDetails from "./FoodBankDetails/FoodBankDetails";
 import { useState } from "react";
 import TopNavbar from "../TopNavbar/TopNavbar";
 import SideNavbar from "../SideNavbar/SideNavbar";
@@ -28,8 +27,6 @@ const restaurant = {
     wastage: 1000,
     donation: 500,
 };
-
-const acceptedDonationRequests = ["a", "b"];
 
 const DonationRequests = () => {
     const [displayIndex, setDisplayIndex] = useState(null);
@@ -186,7 +183,7 @@ const DonationRequests = () => {
                                                 <div
                                                     className={classes.containerDiv}
                                                 >
-                                                    <h1>{request.listing}</h1>
+                                                    <h1>{`List: #${request.listing}`}</h1>
                                                     <p>{`Quantity: ${request.quantity}kg`}</p>
                                                     <p>{`People Served: ${request.people}`}</p>
                                                     <p>{` Location: ${request.location}`}</p>

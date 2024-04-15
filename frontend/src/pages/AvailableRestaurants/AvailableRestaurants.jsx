@@ -17,7 +17,7 @@ const restaurants = [
 
 const AvailableRestaurants = () => {
     const [showDetails, setShowDetails] = useState(true);
-    const [clickedIndex, setClickedIndex] = useState(null);
+    const [, setClickedIndex] = useState(null);
 
     function showDetailsHandler() {
         setShowDetails(!showDetails);
