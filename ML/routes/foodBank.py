@@ -40,6 +40,8 @@ async def delete_foodBank(id: int, db: Session = Depends(get_db)):
 async def get_foodBanks(db: Session = Depends(get_db)):
     return db.query(foodBankSchema).all()
 
-@router.get("/get/{id}")
-async def get_foodBank(id: int, db: Session = Depends(get_db)):
-    return db.query(foodBankSchema).filter(foodBankSchema.id == id).first()
+@router.get("/get/{email}")
+async def get_foodBank(email: str, db: Session = Depends(get_db)):
+    if db.query(foodBankSchema).filter(foodBankSchema.email == email).first() == None:
+        return "Invalid user"
+    return db.query(foodBankSchema).filter(foodBankSchema.email == email).first()
