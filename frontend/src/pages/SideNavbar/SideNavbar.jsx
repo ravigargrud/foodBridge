@@ -1,6 +1,7 @@
 import classes from "./SideNavbar.module.css";
 
 import USERIMG from '../../assets/images/user.png'
+import { useNavigate } from "react-router-dom";
 
 import {
     MdDashboard,
@@ -12,8 +13,14 @@ import {
 
 // eslint-disable-next-line react/prop-types
 const SideNavbar = ({ showNavbar }) => {
+    const navigate = useNavigate();
+
     if (!showNavbar) {
         return null;
+    }
+
+    function logOut() {
+        navigate('/');
     }
 
     return (
@@ -28,7 +35,7 @@ const SideNavbar = ({ showNavbar }) => {
                 </ul>
             </div>
             <div className={classes.bottom}>
-                <p><MdLogout />Logout</p>
+                <p onClick={logOut}><MdLogout className={classes.logoutImg} />Logout</p>
             </div>
         </div>
     );

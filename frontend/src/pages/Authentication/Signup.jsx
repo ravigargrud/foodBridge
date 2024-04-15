@@ -71,7 +71,9 @@ const Signup = () => {
             <div className={classes.signupContainer}>
                 <h1>
                     {existingUser ? "Sign In" : "Sign Up"} for{" "}
-                    {location.state.userType === 'foodBank' ? "Food Bank" : "Restaurant"}
+                    {location.state.userType === "foodBank"
+                        ? "Food Bank"
+                        : "Restaurant"}
                 </h1>
                 <p>
                     {!existingUser
@@ -118,34 +120,38 @@ const Signup = () => {
                             />
                         </div>
 
-                        {!existingUser ? (<div>
-                            <input
-                                required
-                                type="text"
-                                id="pincode"
-                                placeholder="Pincode"
-                                value={formData.pincode}
-                                onChange={pinCodeChangeHandler}
-                            />
-                        </div>) : null }
+                        {!existingUser ? (
+                            <div>
+                                <input
+                                    required
+                                    type="text"
+                                    id="pincode"
+                                    placeholder="Pincode"
+                                    value={formData.pincode}
+                                    onChange={pinCodeChangeHandler}
+                                />
+                            </div>
+                        ) : null}
 
-                        {!existingUser ? <div className={classes.formContainer}>
-                            <select
-                                required
-                                name="area"
-                                id="area"
-                                value={formData.area}
-                                onChange={areaChangeHandler}
-                            >
-                                <option value="" disabled selected hidden>
-                                    Please Choose...
-                                </option>
-                                <option value="volvo">Delhi</option>
-                                <option value="saab">New Delhi</option>
-                                <option value="mercedes">Old Delhi</option>
-                                <option value="audi">NCR</option>
-                            </select>
-                        </div> : null}
+                        {!existingUser ? (
+                            <div className={classes.formContainer}>
+                                <select
+                                    required
+                                    name="area"
+                                    id="area"
+                                    value={formData.area}
+                                    onChange={areaChangeHandler}
+                                >
+                                    <option value="" disabled selected hidden>
+                                        Please Choose...
+                                    </option>
+                                    <option value="volvo">Delhi</option>
+                                    <option value="saab">New Delhi</option>
+                                    <option value="mercedes">Old Delhi</option>
+                                    <option value="audi">NCR</option>
+                                </select>
+                            </div>
+                        ) : null}
 
                         <div className={classes.existingUser}>
                             <label htmlFor="vehicle1">Existing User</label>
@@ -170,40 +176,61 @@ const Signup = () => {
                                 required
                                 type="text"
                                 id="username"
+                                placeholder="Username"
                                 onChange={userNameChangeHandler}
                             />
                         </div>
 
-                        <div className={classes.formContainer}>
+                        {!existingUser ? <div className={classes.formContainer}>
                             <input
                                 required
                                 type="email"
+                                placeholder="Email address"
                                 id="email"
                                 onChange={emailChangeHandler}
                             />
-                        </div>
+                        </div> : null}
 
                         <div className={classes.formContainer}>
                             <input
                                 required
                                 type="password"
                                 id="password"
+                                placeholder="Password"
                                 onChange={passwordChangeHandler}
                             />
                         </div>
 
-                        <div className={classes.formContainer}>
+                        {!existingUser ? (
+                            <div>
+                                <input
+                                    required
+                                    type="text"
+                                    id="pincode"
+                                    placeholder="Pincode"
+                                    value={formData.pincode}
+                                    onChange={pinCodeChangeHandler}
+                                />
+                            </div>
+                        ) : null}
+
+                        {!existingUser ? <div className={classes.formContainer}>
                             <select
+                                required
                                 name="area"
                                 id="area"
+                                value={formData.area}
                                 onChange={areaChangeHandler}
                             >
+                                <option value="" disabled selected hidden>
+                                    Please Choose...
+                                </option>
                                 <option value="volvo">Delhi</option>
                                 <option value="saab">New Delhi</option>
                                 <option value="mercedes">Old Delhi</option>
                                 <option value="audi">NCR</option>
                             </select>
-                        </div>
+                        </div> : null}
 
                         <div className={classes.existingUser}>
                             <label htmlFor="vehicle1">Existing User</label>

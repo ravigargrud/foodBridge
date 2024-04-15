@@ -63,4 +63,9 @@
     padding: 1.5rem 0;
     border-radius: 10px;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btnContainer button:hover {
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.05);
 }
