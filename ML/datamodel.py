@@ -29,3 +29,32 @@ class wastePrediction(BaseModel):
     pricingLow: float
     pricingModerate: float
     
+class foodBankModel(BaseModel):
+    id: int
+    bankName: str
+    email: str
+    password: str
+    pincode: int
+    area: str
+    restaurantsAccepted: str
+    restaurantsPending: str
+
+class restaurantModel(BaseModel):
+    id: int
+    restaurantName: str
+    email: str
+    password: str
+    pincode: int
+    area: str
+    foodBankAccepted: str
+    foodBankPending: str
+    foodItems: str
+
+class foodItemModel(BaseModel):
+    id: int
+    itemName: str
+    quantity: int
+    expiryDate: str
+    price: float
+    restaurantId: int
+    restaurant: str
