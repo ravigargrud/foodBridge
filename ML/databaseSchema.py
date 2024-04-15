@@ -7,7 +7,7 @@ class foodBankSchema(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     bankName = Column(String)
-    email = Column(String)
+    email = Column(String, unique=True)
     password = Column(String)
     pincode = Column(Integer)
     area = Column(String)
@@ -19,10 +19,11 @@ class restaurantSchema(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     restaurantName = Column(String)
-    email = Column(String)
+    email = Column(String, unique=True)
     password = Column(String)
     pincode = Column(Integer)
     area = Column(String)
+    predictedWaste = Column(Float)
     foodBankAccepted = Column(String)
     foodBankPending = Column(String)
     foodItems = Column(String)
