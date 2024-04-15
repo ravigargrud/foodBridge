@@ -3,7 +3,7 @@ import classes from "./Signup.module.css";
 
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
@@ -12,42 +12,35 @@ const Signup = () => {
     const usertype = location.state.userType ? location.state.userType : "";
 
     function generateRandomId() {
-        // Generate a random number
-        const randomNumber = Math.floor(Math.random() * 1000000);
-
-        // Get the current timestamp
-        const timestamp = new Date().getTime();
-
-        // Combine the random number and timestamp to create the ID
-        const id = `${timestamp}${randomNumber}`;
-
-        return id;
+        const randomNumber = Math.floor(Math.random() * 10000);
+        return randomNumber;
     }
-    const id = generateRandomId();
+    const genId = generateRandomId();
 
     const [existingUser, setExistingUser] = useState(false);
+
     const initialFormData =
         usertype === "foodBank"
             ? {
-                  id: id,
+                  id: genId,
                   bankName: "",
                   email: "",
                   password: "",
-                  pincode: "",
                   area: "",
-                  restaurantsAccepted: "",
-                  restaurantsPending: "",
+                  restaurantsAccepted: "place",
+                  restaurantsPending: "place",
               }
             : {
-                  id: id,
-                  restaurantName: "",
-                  email: "",
-                  password: "",
-                  pincode: "",
-                  area: "",
-                  foodBankAccepted: "",
-                  foodBankPending: "",
-                  foodItems: "",
+                password: "",
+                id: genId,
+                area: "",
+                predictedWaste: 0,
+                foodBankPending: "place",
+                restaurantName: "",
+                email: "1234",
+                pincode: "",
+                foodBankAccepted: "place",
+                foodItems: "place"
               };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -83,18 +76,35 @@ const Signup = () => {
         });
     }
 
-    const trial = async () => {
-        try {
-            const response = await fetch(
-                "http://localhost:8000/restaurant/get"
-            );
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error(error);
+    function trialFunc1() {
+        axios
+            .get("http://localhost:8000/restaurant/get")
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    function trialFunc2() {
+        axios
+            .get("http://localhost:8000/foodBank/get")
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    useEffect(() => {
+        // Call trialFunc1() or trialFunc2() based on the userType when the component mounts
+        if (usertype === "foodBank") {
+            trialFunc2();
+        } else {
+            trialFunc1();
         }
-    };
-    trial();
+    }, []);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -103,7 +113,6 @@ const Signup = () => {
                 .get("http://localhost:8000/foodBank/get")
                 .then((response) => {
                     const users = response.data;
-
                     if (existingUser === false) {
                         if (
                             !users.find((user) => user.email === formData.email)
@@ -112,11 +121,10 @@ const Signup = () => {
                                 .post("http://localhost:8000/foodBank/create", {
                                     ...formData,
                                 })
-                                .then((response) => {
+                                .then(() => {
                                     navigate(
                                         `/availablerestaurants/user=${formData.bankName}`
                                     );
-                                    console.log(response);
                                 })
                                 .catch((error) => {
                                     console.error(error);
@@ -145,49 +153,50 @@ const Signup = () => {
                 });
         } else {
             axios
-            .get("http://localhost:8000/restaurant/get")
-            .then((response) => {
-                const users = response.data;
+                .get("http://localhost:8000/restaurant/get")
+                .then((response) => {
+                    const users = response.data;
 
-                if (existingUser === false) {
-                    if (
-                        !users.find((user) => user.email === formData.email)
-                    ) {
-                        axios
-                            .post("http://localhost:8000/restaurant/create", {
-                                ...formData,
-                            })
-                            .then((response) => {
-                                navigate(
-                                    `/donationrequests/user=${formData.restaurantName}`
-                                );
-                                console.log(response);
-                            })
-                            .catch((error) => {
-                                console.error(error);
-                            });
+                    if (existingUser === false) {
+                        if (
+                            !users.find((user) => user.email === formData.email)
+                        ) {
+                            axios
+                                .post(
+                                    "http://localhost:8000/restaurant/create",
+                                    { ...formData }
+                                )
+                                .then(() => {
+                                    navigate(
+                                        `/donationrequests/user=${formData.restaurantName}`
+                                    );
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+                        } else {
+                            alert("Email already exists");
+                        }
                     } else {
-                        alert("Email already exists");
+                        if (
+                            users.find(
+                                (user) =>
+                                    user.restaurantName ===
+                                        formData.restaurantName &&
+                                    user.password === formData.password
+                            )
+                        ) {
+                            navigate(
+                                `/donationrequests/user=${formData.restaurantName}`
+                            );
+                        } else {
+                            alert("Bankname or password is incorrect");
+                        }
                     }
-                } else {
-                    if (
-                        users.find(
-                            (user) =>
-                                user.restaurantName === formData.restaurantName &&
-                                user.password === formData.password
-                        )
-                    ) {
-                        navigate(
-                            `/donationrequests/user=${formData.restaurantName}`
-                        );
-                    } else {
-                        alert("Bankname or password is incorrect");
-                    }
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
     }
 
@@ -271,10 +280,25 @@ const Signup = () => {
                                     <option value="" disabled selected hidden>
                                         Please Choose...
                                     </option>
-                                    <option value="volvo">Delhi</option>
-                                    <option value="saab">New Delhi</option>
-                                    <option value="mercedes">Old Delhi</option>
-                                    <option value="audi">NCR</option>
+                                    <option value="Red Fort">Red Fort</option>
+                                    <option value="Vaishali">Vaishali</option>
+                                    <option value="Panipath">Panipath</option>
+                                    <option value="Jasola">Jasola</option>
+                                    <option value="Karkardooma">
+                                        Karkardooma
+                                    </option>
+                                    <option value="Khan Market">
+                                        Khan Market
+                                    </option>
+                                    <option value="Delhi Haat">
+                                        Delhi Haat
+                                    </option>
+                                    <option value="Lajpat Nagar">
+                                        Lajpat Nagar
+                                    </option>
+                                    <option value="Kashmere Gate">
+                                        Kashmere Gate
+                                    </option>
                                 </select>
                             </div>
                         ) : null}
@@ -302,6 +326,7 @@ const Signup = () => {
                                 required
                                 type="text"
                                 id="bankname"
+                                value={formData.restaurantName}
                                 placeholder="Restaurant Name"
                                 onChange={restaurantNameChangeHandler}
                             />
@@ -314,6 +339,7 @@ const Signup = () => {
                                     type="email"
                                     placeholder="Email address"
                                     id="email"
+                                    value={formData.email}
                                     onChange={emailChangeHandler}
                                 />
                             </div>
@@ -324,6 +350,7 @@ const Signup = () => {
                                 required
                                 type="password"
                                 id="password"
+                                value={formData.password}
                                 placeholder="Password"
                                 onChange={passwordChangeHandler}
                             />
@@ -354,10 +381,25 @@ const Signup = () => {
                                     <option value="" disabled selected hidden>
                                         Please Choose...
                                     </option>
-                                    <option value="volvo">Delhi</option>
-                                    <option value="saab">New Delhi</option>
-                                    <option value="mercedes">Old Delhi</option>
-                                    <option value="audi">NCR</option>
+                                    <option value="Red Fort">Red Fort</option>
+                                    <option value="Vaishali">Vaishali</option>
+                                    <option value="Panipath">Panipath</option>
+                                    <option value="Jasola">Jasola</option>
+                                    <option value="Karkardooma">
+                                        Karkardooma
+                                    </option>
+                                    <option value="Khan Market">
+                                        Khan Market
+                                    </option>
+                                    <option value="Delhi Haat">
+                                        Delhi Haat
+                                    </option>
+                                    <option value="Lajpat Nagar">
+                                        Lajpat Nagar
+                                    </option>
+                                    <option value="Kashmere Gate">
+                                        Kashmere Gate
+                                    </option>
                                 </select>
                             </div>
                         ) : null}
