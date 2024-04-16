@@ -30,7 +30,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/prediction',
-        element: <Prediction />,
+        element: (
+            <>
+                <TopNavbar showNavbar={true} />
+                <Prediction />
+            </>
+        ),
+        
     },
     {
         path: "/availablerestaurants/:profileId",

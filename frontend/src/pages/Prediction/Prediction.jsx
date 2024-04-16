@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./Prediction.module.css";
 import axios from "axios";
 
 const Prediction = () => {
+    const [wastage, setWastage] = useState(null);
+
     const [formData, setFormData] = useState({
         numberOfGuests: 0,
 
@@ -40,7 +43,7 @@ const Prediction = () => {
 
         pricingHigh: 0,
         pricingLow: 0,
-        pricingModerate: 0
+        pricingModerate: 0,
     });
 
     function formHandler(event) {
@@ -84,133 +87,162 @@ const Prediction = () => {
         formDataCopy.eventTypeCorporate = eventType === "corporate" ? 1 : 0;
         formDataCopy.eventTypeSocialGathering = eventType === "social" ? 1 : 0;
         formDataCopy.eventTypeWedding = eventType === "wedding" ? 1 : 0;
-        formDataCopy.storageConditionsRefrigerated = storageConditions === "refrigerated" ? 1 : 0;
-        formDataCopy.storageConditionsRoomTemperature = storageConditions === "room-temp" ? 1 : 0;
-        formDataCopy.purchaseHistoryOccasional = purchaseHistory === "occasional" ? 1 : 0;
-        formDataCopy.purchaseHistoryRegular = purchaseHistory === "regular" ? 1 : 0;
+        formDataCopy.storageConditionsRefrigerated =
+            storageConditions === "refrigerated" ? 1 : 0;
+        formDataCopy.storageConditionsRoomTemperature =
+            storageConditions === "room-temp" ? 1 : 0;
+        formDataCopy.purchaseHistoryOccasional =
+            purchaseHistory === "occasional" ? 1 : 0;
+        formDataCopy.purchaseHistoryRegular =
+            purchaseHistory === "regular" ? 1 : 0;
         formDataCopy.seasonalityAllSeasons = seasonality === "all" ? 1 : 0;
         formDataCopy.seasonalitySummer = seasonality === "summer" ? 1 : 0;
         formDataCopy.seasonalityWinter = seasonality === "winter" ? 1 : 0;
-        formDataCopy.preparationMethodBuffet = preparationMethod === "buffet" ? 1 : 0;
-        formDataCopy.preparationMethodFingerFood = preparationMethod === "finger" ? 1 : 0;
-        formDataCopy.preparationMethodSitDownDinner = preparationMethod === "sit-down" ? 1 : 0;
-        formDataCopy.geographicalLocationRural = geographicalLocation === "rural" ? 1 : 0;
-        formDataCopy.geographicalLocationSubUrban = geographicalLocation === "sub-urban" ? 1 : 0;
-        formDataCopy.geographicalLocationUrban = geographicalLocation === "urban" ? 1 : 0;
+        formDataCopy.preparationMethodBuffet =
+            preparationMethod === "buffet" ? 1 : 0;
+        formDataCopy.preparationMethodFingerFood =
+            preparationMethod === "finger" ? 1 : 0;
+        formDataCopy.preparationMethodSitDownDinner =
+            preparationMethod === "sit-down" ? 1 : 0;
+        formDataCopy.geographicalLocationRural =
+            geographicalLocation === "rural" ? 1 : 0;
+        formDataCopy.geographicalLocationSubUrban =
+            geographicalLocation === "sub-urban" ? 1 : 0;
+        formDataCopy.geographicalLocationUrban =
+            geographicalLocation === "urban" ? 1 : 0;
         formDataCopy.pricingHigh = pricing === "high" ? 1 : 0;
         formDataCopy.pricingLow = pricing === "low" ? 1 : 0;
         formDataCopy.pricingModerate = pricing === "moderate" ? 1 : 0;
-    
+
         setFormData(formDataCopy);
-        
+
         // console.log(formData);
-        axios.post('http://localhost:8000/predict/', {...formData}).then((response) => {
-            console.log(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
+        axios
+            .post("http://localhost:8000/predict/", { ...formData })
+            .then((response) => {
+                setWastage(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
         <div className={classes.predict}>
             <form action="" className={classes.form} onSubmit={formHandler}>
-                <input type="text" placeholder="Address" required />
-                <div>
-                    <input
-                        required
-                        type="text"
-                        placeholder="Number of Guests (per day)"
-                    />
-                    <input
-                        required
-                        type="text"
-                        placeholder="Quantity of food (per Guest)"
-                    />
+                <h1>Wastage Prediction Model</h1>
+                <div className={classes.content}>
+                    <input type="text" placeholder="Address" required />
+                    <div className={classes.div1}>
+                        <input
+                            required
+                            type="text"
+                            placeholder="Number of Guests (per day)"
+                        />
+                        <input
+                            required
+                            type="text"
+                            placeholder="Quantity of food (per Guest)"
+                        />
+                    </div>
+                    <div className={classes.div2}></div>
+                    <div className={classes.div3}>
+                        <select name="food" id="Food">
+                            <option value="" disabled selected hidden>
+                                Food Type
+                            </option>
+                            <option value="meat">Meat</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="dairy">Dairy Products</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="baked">Baked Goods</option>
+                        </select>
+                        <select name="Event" id="event">
+                            <option value="" disabled selected hidden>
+                                Event Type
+                            </option>
+                            <option value="occasional">Birthday</option>
+                            <option value="corporate">Corporate</option>
+                            <option value="social">Social Gathering</option>
+                            <option value="wedding">Wedding</option>
+                        </select>
+                        <select
+                            required
+                            name="Storage Conditions"
+                            id="storageconditions"
+                        >
+                            <option value="" disabled selected hidden>
+                                Storage Condition
+                            </option>
+                            <option value="refrigerated">Refrigerated</option>
+                            <option value="room-temp">
+                                Room - temperature
+                            </option>
+                        </select>
+                        <select
+                            required
+                            name="Purchase History"
+                            id="purchasehistory"
+                        >
+                            <option value="" disabled selected hidden>
+                                Purchase History
+                            </option>
+                            <option value="occasional">Occasional</option>
+                            <option value="regular">Regular</option>
+                        </select>
+                        <select required name="Seasonality" id="seasonality">
+                            <option value="" disabled selected hidden>
+                                Seasonality
+                            </option>
+                            <option value="all">All Seasons</option>
+                            <option value="summer">Summer</option>
+                            <option value="winter">Winter</option>
+                        </select>
+                        <select
+                            required
+                            name="Preparation Method"
+                            id="preparationmethod"
+                        >
+                            <option value="" disabled selected hidden>
+                                Even Type
+                            </option>
+                            <option value="buffet">Buffet</option>
+                            <option value="finger">Finger Food</option>
+                            <option value="sit-down">Sit Down Dinner</option>
+                        </select>
+                        <select
+                            required
+                            name="Geographical Location"
+                            id="geographicallocation"
+                        >
+                            <option value="" disabled selected hidden>
+                                Geographical Location
+                            </option>
+                            <option value={"rural"}>Rural</option>
+                            <option value={"sub-urban"}>Sub - urban</option>
+                            <option value={"urban"}>Urban</option>
+                        </select>
+                        <select required name="Pricing" id="pricing">
+                            <option value="" disabled selected hidden>
+                                Pricing
+                            </option>
+                            <option value={"high"}>High</option>
+                            <option value={"low"}>Low</option>
+                            <option value={"moderate"}>Moderate</option>
+                        </select>
+                    </div>
+                    <button>Submit</button>
+                    {wastage && (
+                        <p
+                            className={classes.wastage}
+                        >{`Predicted Wastage : ${wastage.prediction.toFixed(
+                            5
+                        )} kg`}</p>
+                    )}
+                    <Link to="/" className={classes.link}>
+                        Go back to Home
+                    </Link>
                 </div>
-                <select name="food" id="Food">
-                    <option value="" disabled selected hidden>
-                        Please Choose...
-                    </option>
-                    <option value="meat">Meat</option>
-                    <option value="vegetable">Vegetable</option>
-                    <option value="dairy">Dairy Products</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="baked">Baked Goods</option>
-                </select>
-                <select name="Event" id="event">
-                    <option value="" disabled selected hidden>
-                        Please Choose...
-                    </option>
-                    <option value="occasional">Birthday</option>
-                    <option value="corporate">Corporate</option>
-                    <option value="social">Social Gathering</option>
-                    <option value="wedding">Wedding</option>
-                </select>
-                <div>
-                    <select
-                        required
-                        name="Storage Conditions"
-                        id="storageconditions"
-                    >
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value="refrigerated">Refrigerated</option>
-                        <option value="room-temp">Room - temperature</option>
-                    </select>
-                    <select
-                        required
-                        name="Purchase History"
-                        id="purchasehistory"
-                    >
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value="occasional">Occasional</option>
-                        <option value="regular">Regular</option>
-                    </select>
-                    <select required name="Seasonality" id="seasonality">
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value="all">All Seasons</option>
-                        <option value="summer">Summer</option>
-                        <option value="winter">Winter</option>
-                    </select>
-                    <select
-                        required
-                        name="Preparation Method"
-                        id="preparationmethod"
-                    >
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value="buffet">Buffet</option>
-                        <option value="finger">Finger Food</option>
-                        <option value="sit-down">Sit Down Dinner</option>
-                    </select>
-                    <select
-                        required
-                        name="Geographical Location"
-                        id="geographicallocation"
-                    >
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value={"rural"}>Rural</option>
-                        <option value={"sub-urban"}>Sub - urban</option>
-                        <option value={"urban"}>Urban</option>
-                    </select>
-                    <select required name="Pricing" id="pricing">
-                        <option value="" disabled selected hidden>
-                            Please Choose...
-                        </option>
-                        <option value={"high"}>High</option>
-                        <option value={"low"}>Low</option>
-                        <option value={"moderate"}>Moderate</option>
-                    </select>
-                </div>
-                <button>Submit</button>
             </form>
         </div>
     );

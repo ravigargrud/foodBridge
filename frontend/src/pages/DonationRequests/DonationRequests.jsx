@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TopNavbar from "../TopNavbar/TopNavbar";
 import SideNavbar from "../SideNavbar/SideNavbar";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import { FaCirclePlus } from "react-icons/fa6";
 import Time from "../../Time";
@@ -33,16 +34,18 @@ const DonationRequests = () => {
     const [displayIndex, setDisplayIndex] = useState(null);
     const [newDonation, setNewDonation] = useState(false);
 
-    const [data, setData] = useState([]);
+    const [restaurantData, setRestaurantData] = useState([]);
     const [foodBankData, setFoodBankData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    
+    const params = useParams();
 
     useEffect(() => {
         axios
             .get("http://localhost:8000/restaurant/get")
             .then((response) => {
-                setData(response.data);
+                setRestaurantData(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -62,6 +65,12 @@ const DonationRequests = () => {
                 setLoading(false);
             });
     }, []);
+
+    // console.log(foodBankData);
+    const currUser = restaurantData.find((user) => {
+        return user.id == params.profileId;
+    });
+    console.log(currUser);
 
     function displayInformation(index) {
         setDisplayIndex(displayIndex === index ? null : index);
@@ -146,8 +155,8 @@ const DonationRequests = () => {
                 <div className={classes.main}>
                     <TopNavbar
                         showNavbar={true}
-                        userName={"Aryan"}
-                        location={"121 Negro Arroyo Lane"}
+                        userName={"Username"}
+                        location={`Location: user area`}
                     />
                     <SideNavbar showNavbar={true} />
                     <div className={classes.cards}>

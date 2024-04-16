@@ -21,6 +21,10 @@ const AvailableRestaurants = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [currUser, setCurrUser] = useState(null);
+    const [currUserName, setCurrUserName] = useState(null);
+    const [currUserArea, setCurrUserArea] = useState(null);
+
     useEffect(() => {
         axios
             .get("http://localhost:8000/restaurant/get")
@@ -53,20 +57,27 @@ const AvailableRestaurants = () => {
         setClickedIndex(index);
     }
 
-    // console.log(data);
-    // console.log(params.profileId);
-    const currUser = foodBankData.find((user) => {
-        return user.id === params.profileId;
-    });
-    console.log(currUser);
+    // console.log(foodBankData);
+    async function findUser() {
+        await foodBankData.find((user) => {
+            return user.id == params.profileId;
+        }).then((user) => {
+            setCurrUser(user);
+            setCurrUserName(user.name);
+            setCurrUserArea(user.area);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    findUser();
 
     return (
         <div className="availableRestaurants">
             <div className={classes.main}>
                 <TopNavbar
                     showNavbar={true}
-                    userName={""}
-                    location={"121 Negro Arroyo Lane"}
+                    userName={`Username`}
+                    location={`Location: user area`}
                 />
                 <SideNavbar showNavbar={true} />
                 {showDetails ? (
@@ -86,7 +97,7 @@ const AvailableRestaurants = () => {
                                     >
                                         <div className={classes.left}>
                                             <h1>{restaurant.restaurantName}</h1>
-                                            <p>1.2 kms (For 150)</p>
+                                            <p>{`Area: ${restaurant.area}`}</p>
                                         </div>
                                         <div className={classes.right}>
                                             <button
