@@ -19,6 +19,8 @@ const Signup = () => {
 
     const [existingUser, setExistingUser] = useState(false);
 
+    const [currUser, setCurrUser] = useState(null);
+
     const initialFormData =
         usertype === "foodBank"
             ? {
@@ -31,16 +33,16 @@ const Signup = () => {
                   restaurantsPending: "place",
               }
             : {
-                password: "",
-                id: genId,
-                area: "",
-                predictedWaste: 0,
-                foodBankPending: "place",
-                restaurantName: "",
-                email: "1234",
-                pincode: "",
-                foodBankAccepted: "place",
-                foodItems: "place"
+                  password: "",
+                  id: genId,
+                  area: "",
+                  predictedWaste: 0,
+                  foodBankPending: "place",
+                  restaurantName: "",
+                  email: "",
+                  pincode: "",
+                  foodBankAccepted: "place",
+                  foodItems: "place",
               };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -101,7 +103,6 @@ const Signup = () => {
         // Call trialFunc1() or trialFunc2() based on the userType when the component mounts
         if (usertype === "foodBank") {
             trialFunc2();
-        } else {
             trialFunc1();
         }
     }, []);
@@ -117,32 +118,27 @@ const Signup = () => {
                         if (
                             !users.find((user) => user.email === formData.email)
                         ) {
-                            axios
+                             axios
                                 .post("http://localhost:8000/foodBank/create", {
                                     ...formData,
                                 })
                                 .then(() => {
                                     navigate(
-                                        `/availablerestaurants/user=${formData.bankName}`
+                                        `/availablerestaurants/${formData.id}`
                                     );
                                 })
                                 .catch((error) => {
                                     console.error(error);
                                 });
                         } else {
-                            alert("Restaurant Email already exists");
+                            alert("Email already exists");
                         }
                     } else {
-                        if (
-                            users.find(
-                                (user) =>
-                                    user.bankName === formData.bankName &&
-                                    user.password === formData.password
-                            )
-                        ) {
-                            navigate(
-                                `/availablerestaurants/user=${formData.bankName}`
-                            );
+                        setCurrUser(users.find((user) => {
+                            return (user.password === formData.password && user.bankName === formData.bankName) ? user : null;
+                        }));
+                        if (currUser && currUser !== null) {
+                            navigate(`/availablerestaurants/${currUser.id}`);
                         } else {
                             alert("Bankname or password is incorrect");
                         }
@@ -168,7 +164,7 @@ const Signup = () => {
                                 )
                                 .then(() => {
                                     navigate(
-                                        `/donationrequests/user=${formData.restaurantName}`
+                                        `/donationrequests/${formData.id}`
                                     );
                                 })
                                 .catch((error) => {
@@ -178,17 +174,11 @@ const Signup = () => {
                             alert("Email already exists");
                         }
                     } else {
-                        if (
-                            users.find(
-                                (user) =>
-                                    user.restaurantName ===
-                                        formData.restaurantName &&
-                                    user.password === formData.password
-                            )
-                        ) {
-                            navigate(
-                                `/donationrequests/user=${formData.restaurantName}`
-                            );
+                        setCurrUser(users.find((user) => {
+                            return(user.password === formData.password && user.restaurantName === formData.restaurantName) ? user : null;
+                        }));
+                        if (currUser && currUser !== null) {
+                            navigate(`/donationrequests/${currUser.id}`);
                         } else {
                             alert("Bankname or password is incorrect");
                         }

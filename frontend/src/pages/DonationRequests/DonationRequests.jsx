@@ -1,8 +1,9 @@
 import classes from "./DonationRequests.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopNavbar from "../TopNavbar/TopNavbar";
 import SideNavbar from "../SideNavbar/SideNavbar";
+import axios from "axios";
 
 import { FaCirclePlus } from "react-icons/fa6";
 import Time from "../../Time";
@@ -31,6 +32,36 @@ const restaurant = {
 const DonationRequests = () => {
     const [displayIndex, setDisplayIndex] = useState(null);
     const [newDonation, setNewDonation] = useState(false);
+
+    const [data, setData] = useState([]);
+    const [foodBankData, setFoodBankData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:8000/restaurant/get")
+            .then((response) => {
+                setData(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get("http://localhost:8000/foodBank/get")
+            .then((response) => {
+                setFoodBankData(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     function displayInformation(index) {
         setDisplayIndex(displayIndex === index ? null : index);
@@ -136,7 +167,7 @@ const DonationRequests = () => {
                             </div>
                             <div className={classes.cardBottom}>
                                 <Time className={classes.time} />
-                                {pendingDonationRequests.map(
+                                {foodBankData.map(
                                     (request, index) => {
                                         return (
                                             <div key={index}>
@@ -150,8 +181,8 @@ const DonationRequests = () => {
                                                             classes.containerDiv
                                                         }
                                                     >
-                                                        <h1>{request.name}</h1>
-                                                        <p>{`${request.distance} (Quantity: ${request.quantity})`}</p>
+                                                        <h1>{request.bankName}</h1>
+                                                        <p>{`${request.area} (Quantity: ${Math.floor(Math.random()*150+1)})`}</p>
                                                     </div>
                                                     <button>
                                                         ASSIGN TO ME

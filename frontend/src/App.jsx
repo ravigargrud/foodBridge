@@ -6,11 +6,12 @@ import NOODLE from "./assets/images/landingpage/noodle.svg";
 // get user record from /user/{id} api on port 8000
 
 function App() {
-    const [currentImg, setCurrentImg] = useState(() =>
-        Math.floor(Math.random() * 2)
-    );
+    // const [currentImg, setCurrentImg] = useState(() =>
+    //     Math.floor(Math.random() * 2)
+    // );
 
     const navigate = useNavigate();
+    let currentImg  = 0;
 
     return (
         <div className={classes.landingPage}>
@@ -43,6 +44,14 @@ function App() {
                         }}
                     >
                         RESTAURANT ACCESS
+                    </button>
+                    <button
+                        className={classes.link}
+                        onClick={() => {
+                            navigate("/prediction");
+                        }}
+                    >
+                        FREE PREDICTION USING AI
                     </button>
                 </div>
                 <img src={NOODLE} alt="noodle" />

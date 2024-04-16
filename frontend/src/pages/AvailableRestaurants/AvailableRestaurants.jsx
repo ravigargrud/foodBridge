@@ -1,7 +1,7 @@
 import Time from "../../Time";
 import classes from "./AvailableRestaurants.module.css";
 import MAP from "../../assets/images/map/map.png";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import TopNavbar from "../../pages/TopNavbar/TopNavbar.jsx";
 import SideNavbar from "../SideNavbar/SideNavbar.jsx";
@@ -12,16 +12,32 @@ import axios from "axios";
 
 const AvailableRestaurants = () => {
     const [showDetails, setShowDetails] = useState(true);
-    const [clickedIndex , setClickedIndex] = useState(null);
+    const [clickedIndex, setClickedIndex] = useState(null);
+
+    const params = useParams();
 
     const [data, setData] = useState([]);
+    const [foodBankData, setFoodBankData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/restaurant/get")
+        axios
+            .get("http://localhost:8000/restaurant/get")
             .then((response) => {
                 setData(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get("http://localhost:8000/foodBank/get")
+            .then((response) => {
+                setFoodBankData(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -37,15 +53,19 @@ const AvailableRestaurants = () => {
         setClickedIndex(index);
     }
 
-    // const params = useParams();
-    // console.log(params);
+    // console.log(data);
+    // console.log(params.profileId);
+    const currUser = foodBankData.find((user) => {
+        return user.id === params.profileId;
+    });
+    console.log(currUser);
 
     return (
         <div className="availableRestaurants">
             <div className={classes.main}>
                 <TopNavbar
                     showNavbar={true}
-                    userName={"Aryan"}
+                    userName={""}
                     location={"121 Negro Arroyo Lane"}
                 />
                 <SideNavbar showNavbar={true} />
@@ -84,7 +104,7 @@ const AvailableRestaurants = () => {
                         </div>
                     </div>
                 ) : (
-                    <RestaurantDetails closeDetails={showDetailsHandler}/>
+                    <RestaurantDetails closeDetails={showDetailsHandler} />
                 )}
             </div>
         </div>

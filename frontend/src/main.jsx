@@ -10,15 +10,12 @@ import AvailableRestaurants from "./pages/AvailableRestaurants/AvailableRestaura
 import DonationRequests from "./pages/DonationRequests/DonationRequests.jsx";
 import TopNavbar from "./pages/TopNavbar/TopNavbar.jsx";
 import SideNavbar from "./pages/SideNavbar/SideNavbar.jsx";
+import Prediction from "./pages/Prediction/Prediction.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: (
-            <>
-                <App />
-            </>
-        ),
+        element: <App />,
         errorElement: <div>404 Not Found</div>,
     },
     {
@@ -27,15 +24,18 @@ const router = createBrowserRouter([
             <>
                 <TopNavbar showNavbar={true} />
                 <Signup />
-                
             </>
         ),
-        errorElement: <div>Please go to Home Page first</div>
+        errorElement: <div>Please go to Home Page first</div>,
+    },
+    {
+        path: '/prediction',
+        element: <Prediction />,
     },
     {
         path: "/availablerestaurants/:profileId",
         element: (
-            <>  
+            <>
                 <AvailableRestaurants />
             </>
         ),
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     {
         path: "/donationrequests/:profileId",
         element: (
-            <>  
+            <>
                 <TopNavbar showNavbar={true} />
                 <SideNavbar showNavbar={true} />
                 <DonationRequests />
@@ -53,7 +53,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>
+    <RouterProvider router={router} />
 );
