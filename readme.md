@@ -22,6 +22,19 @@ Welcome to the **FoodBridge** repository! 🚀
 
 ---
 
+### **Screenshots**
+![Landing](https://github.com/user-attachments/assets/b41dd3ac-1997-4589-a147-ee7fbd8e8806)
+![Food bank sign up page](https://github.com/user-attachments/assets/78c4dd74-448a-4e58-b259-95bbf704b43f)
+![Restaurant sign up page](https://github.com/user-attachments/assets/a4fe4f1c-3d7d-410c-a19b-956404a03089)
+![Food bank dashboard](https://github.com/user-attachments/assets/75fab992-5fca-4bc2-9a1a-5d943c00d7d4)
+![Food bank dashboard (1)](https://github.com/user-attachments/assets/b46ae71d-8079-48c4-b00a-303d51895283)
+![restaurant dashboard](https://github.com/user-attachments/assets/618714b7-a1bd-435e-8c86-0731c3b2f2a5)
+![restaurant dashboard 3](https://github.com/user-attachments/assets/f50fe21c-322e-49bf-8347-11326a91f803)
+
+
+
+---
+
 ### **Technologies Used**
 
 - **Frontend**: React.js for the user interface.  
