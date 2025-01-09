@@ -6,6 +6,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+
 const Signup = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -260,6 +262,12 @@ const Signup = () => {
 
                         {!existingUser ? (
                             <div className={classes.formContainer}>
+                                <GooglePlacesAutocomplete apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+                                    selectProps={{
+                                        destination: formData.Destination,
+                                        onChange: (v) => { setFormData({ ...formData, area: v.label }); },
+                                    }}
+                                />
                                 <select
                                     required
                                     name="area"

@@ -116,9 +116,10 @@ const Prediction = () => {
 
         setFormData(formDataCopy);
 
-        // console.log(formData);
+        // console.log(formDataCopy);
+
         axios
-            .post("http://localhost:8000/predict/", { ...formData })
+            .post("http://localhost:8000/predict/", { ...formDataCopy })
             .then((response) => {
                 setWastage(response.data);
             })

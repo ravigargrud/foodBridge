@@ -3,3 +3,5 @@ ML/.ipynb_checkpoints
 ML/myenv
 ML/__pycache__
 ML/routes/__pycache__
+ML/venv
+*.env
