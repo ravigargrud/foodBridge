@@ -58,26 +58,31 @@ const AvailableRestaurants = () => {
     }
 
     // console.log(foodBankData);
-    async function findUser() {
-        await foodBankData.find((user) => {
+    function findUser() {
+        console.log(params.profileId);
+        const user = foodBankData.find((user) => {
             return user.id == params.profileId;
-        }).then((user) => {
-            setCurrUser(user);
-            setCurrUserName(user.name);
-            setCurrUserArea(user.area);
-        }).catch((error) => {
-            console.log(error);
         });
+        if (user) {
+            console.log(user);
+            setCurrUser(user);
+            setCurrUserName(user.bankName);
+            setCurrUserArea(user.area);
+        } else {
+            console.log("User not found");
+        }
     }
-    findUser();
+    useEffect(() => {
+        findUser();
+    }, [foodBankData, params.profileId]);
 
     return (
         <div className="availableRestaurants">
             <div className={classes.main}>
                 <TopNavbar
                     showNavbar={true}
-                    userName={`Username`}
-                    location={`Location: user area`}
+                    userName={currUserName}
+                    location={`Location: ${currUserArea}`}
                 />
                 <SideNavbar showNavbar={true} />
                 {showDetails ? (
@@ -98,6 +103,7 @@ const AvailableRestaurants = () => {
                                         <div className={classes.left}>
                                             <h1>{restaurant.restaurantName}</h1>
                                             <p>{`Area: ${restaurant.area}`}</p>
+                                            
                                         </div>
                                         <div className={classes.right}>
                                             <button
