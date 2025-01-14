@@ -13,51 +13,49 @@ import SideNavbar from "./pages/SideNavbar/SideNavbar.jsx";
 import Prediction from "./pages/Prediction/Prediction.jsx";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-        errorElement: <div>404 Not Found</div>,
-    },
-    {
-        path: "/signup",
-        element: (
-            <>
-                <TopNavbar showNavbar={true} />
-                <Signup />
-            </>
-        ),
-        errorElement: <div>Please go to Home Page first</div>,
-    },
-    {
-        path: '/prediction',
-        element: (
-            <>
-                <TopNavbar showNavbar={true} />
-                <Prediction />
-            </>
-        ),
-        
-    },
-    {
-        path: "/availablerestaurants/:profileId",
-        element: (
-            <>
-                <AvailableRestaurants />
-            </>
-        ),
-    },
-    {
-        path: "/donationrequests/:profileId",
-        element: (
-            <>
-                <TopNavbar showNavbar={true} />
-                <SideNavbar showNavbar={true} />
-                <DonationRequests />
-            </>
-        ),
-    },
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <div>404 Not Found</div>,
+  },
+  {
+    path: "/signup",
+    element: (
+      <>
+        <TopNavbar showNavbar={true} />
+        <Signup />
+      </>
+    ),
+  },
+  {
+    path: "/prediction",
+    element: (
+      <>
+        <TopNavbar showNavbar={true} />
+        <Prediction />
+      </>
+    ),
+  },
+  {
+    path: "/availablerestaurants/:profileId",
+    element: (
+      <>
+        <AvailableRestaurants />
+      </>
+    ),
+  },
+  {
+    path: "/donationrequests/:profileId",
+    element: (
+      <>
+        <TopNavbar showNavbar={true} />
+        <SideNavbar showNavbar={true} />
+        <DonationRequests />
+      </>
+    ),
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
 );

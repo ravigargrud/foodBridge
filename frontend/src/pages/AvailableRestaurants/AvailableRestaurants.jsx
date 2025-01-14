@@ -101,7 +101,7 @@ const AvailableRestaurants = () => {
                                         className={classes.details}
                                     >
                                         <div className={classes.left}>
-                                            <h1>{restaurant.restaurantName}</h1>
+                                            <h1>{restaurant?.restaurantName}</h1>
                                             <p>{`Area: ${restaurant.area}`}</p>
                                             
                                         </div>

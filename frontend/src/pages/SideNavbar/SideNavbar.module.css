@@ -3,15 +3,17 @@
     position: fixed;
     height: 100%;
     left: 0;
-    width: 175px; 
-    padding-top: 8rem; 
-    padding-bottom: 20px;
+    width: 200px; /* Slightly increased width for better spacing */
+    padding-top: 4rem; /* Adjusted padding for better alignment */
+    padding-bottom: 2rem;
     z-index: 5;
-    overflow: auto;
+    overflow-y: auto; /* Allows vertical scrolling if content exceeds */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for better separation */
 }
 
 .top img {
     max-height: 6rem;
+    margin-top: 4rem;
 }
 
 .top {
@@ -22,46 +24,63 @@
 }
 
 .sideNavbar .top ul {
-    list-style-type: none;
+    list-style: none; /* Removed unnecessary type declaration */
     padding: 0;
-    margin-top: 3rem;
+    margin-top: 2rem;
+    width: 100%; /* Ensures the list spans the full width */
 }
 
 .top ul li {
-    width: 100%;
+    width: 90%; /* Adds some spacing on both sides */
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start; /* Aligns icons and text to the left */
     align-items: center;
-    margin-top: 1rem;
-    padding: 1rem;
-
-}
-.top ul li:active {
-    background-color: #08332F;
+    margin: 0.5rem auto; /* Adjusted margin for better spacing */
+    padding: 0.75rem 1rem;
     border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Adds a hover effect */
+    cursor: pointer;
+}
+
+.top ul li:hover, .top ul li:active {
+    background-color: #08332F;
+    transform: scale(1.05); /* Slightly enlarges on hover for a modern effect */
 }
 
 .top ul li p {
     color: white;
-    margin-left: 0.5rem;
-} 
+    margin-left: 0.75rem; /* Adjusted for better spacing */
+    font-size: 0.9rem; /* Made text size consistent */
+    font-weight: 500;
+}
 
 .bottom {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 8rem;
+    margin-top: auto; /* Pushes the logout section to the bottom */
 }
+
 .bottom p {
     text-align: center;
     display: flex;
     align-items: center;
-    padding: 2rem 1rem;
+    padding: 1rem;
     color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Adds a hover effect */
+    border-radius: 10px;
+}
+
+.bottom p:hover {
+    background-color: #08332F;
+    transform: scale(1.05); /* Slightly enlarges on hover */
 }
 
 .logoutImg {
-    margin-right: 1rem;
+    margin-right: 0.75rem; /* Adjusted spacing for icon and text */
+    font-size: 1.2rem; /* Slightly increased icon size */
 }
