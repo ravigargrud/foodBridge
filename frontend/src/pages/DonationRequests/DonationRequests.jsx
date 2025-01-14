@@ -17,10 +17,6 @@ const pendingDonationRequests = [
   { name: "c", quantity: `250kg`, distance: `2.0 kms` },
 ];
 
-const donationHistory = [
-  // Example donation data can go here
-];
-
 const restaurant = {
   wastage: 1000,
   donation: 500,
@@ -34,72 +30,76 @@ const DonationRequests = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currUser, setCurrUser] = useState(null);
+  const [donationHistory, setDonationHistory] = useState([]);
 
   const params = useParams();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/restaurant/get")
-      .then((response) => {
-        setRestaurantData(response.data);
+    // Fetch restaurant and food bank data, find user, and fetch donation history
+    const fetchData = async () => {
+      try {
+        const restaurantRes = await axios.get(
+          "http://localhost:8000/restaurant/get"
+        );
+        setRestaurantData(restaurantRes.data);
+
+        const foodBankRes = await axios.get(
+          "http://localhost:8000/foodBank/get"
+        );
+        setFoodBankData(foodBankRes.data);
+
+        // Find the current user based on profileId
+        const user = restaurantRes.data.find(
+          (user) => user.id == params.profileId
+        );
+        if (user) {
+          setCurrUser(user);
+        }
+
+        // Fetch donation history
+        if (user) {
+          const donationRes = await axios.get(
+            "http://localhost:8000/foodItem/get"
+          );
+          const history = donationRes.data.filter(
+            (foodItem) => foodItem.restaurantId === user.id
+          );
+          console.log(history); // Check the console to verify all food items are fetched
+          setDonationHistory(history);
+        }
+
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/foodBank/get")
-      .then((response) => {
-        setFoodBankData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
+    fetchData();
+  }, [params.profileId]);
 
-  function findUser() {
-    const user = restaurantData.find((user) => {
-      return user.id == params.profileId;
-    });
-    if (user) {
-      setCurrUser(user);
-    } else {
-      console.log("User not found");
-    }
-  }
-  useEffect(() => {
-    findUser();
-  }, [foodBankData, params.profileId]);
-
-  function displayInformation(index) {
+  const displayInformation = (index) => {
     setDisplayIndex(displayIndex === index ? null : index);
-  }
+  };
 
-  function makeNewDonation() {
+  const makeNewDonation = () => {
     setNewDonation(!newDonation);
-  }
+  };
 
   const handleFoodCreate = async (event) => {
     event.preventDefault();
 
-    // Collect form data from inputs
     const formattedDate = new Date(event.target.expiryDate.value)
       .toISOString()
-      .split("T")[0]; // Ensure proper date format
+      .split("T")[0];
 
     const data = {
       itemName: event.target.itemName.value,
-      quantity: parseInt(event.target.quantity.value), // Ensure quantity is an integer
-      expiryDate: formattedDate, // Send date in YYYY-MM-DD format
-      price: parseFloat(event.target.price.value), // Ensure price is a float
-      restaurantId: currUser?.id, // Assuming currUser is available
-      restaurant: currUser?.restaurantName, // Assuming currUser is available
+      quantity: parseInt(event.target.quantity.value),
+      expiryDate: formattedDate,
+      price: parseFloat(event.target.price.value),
+      restaurantId: currUser?.id,
+      restaurant: currUser?.restaurantName,
     };
 
     try {
@@ -108,16 +108,45 @@ const DonationRequests = () => {
         data,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure the request body is JSON
+            "Content-Type": "application/json",
           },
         }
       );
       console.log("Food item created:", response.data);
+
+      // After creating a donation, refresh donation history
+      const donationRes = await axios.get("http://localhost:8000/foodItem/get");
+      const history = donationRes.data.filter(
+        (foodItem) => foodItem.restaurantId === currUser.id
+      );
+      setDonationHistory(history); // Update donation history state
+      setNewDonation(false); // Close the donation form
     } catch (error) {
       console.error(
         "Unable to create listing:",
         error.response?.data || error.message
       );
+      setError(error); // Handle error
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
+    }
+  };
+
+  const handleFoodDelete = async (event, id) => {
+    event.preventDefault();
+
+    try {
+      const res = await axios.delete(
+        `http://localhost:8000/foodItem/delete/${id}`
+      );
+
+      const donationRes = await axios.get("http://localhost:8000/foodItem/get");
+      const history = donationRes.data.filter(
+        (foodItem) => foodItem.restaurantId === currUser.id
+      );
+      setDonationHistory(history);
+    } catch (error) {
+      console.log("Error deleting item");
     }
   };
 
@@ -225,21 +254,35 @@ const DonationRequests = () => {
                 </p>
               </div>
               <div className={classes.cardBottom}>
-                {donationHistory.map((request, index) => (
-                  <div key={index}>
-                    <div
-                      className={classes.container}
-                      onClick={() => displayInformation(index)}
-                    >
-                      <div className={classes.containerDiv}>
-                        <h1>{`List: #${request.listing}`}</h1>
-                        <p>{`Quantity: ${request.quantity}kg`}</p>
-                        <p>{`People Served: ${request.people}`}</p>
-                        <p>{`Location: ${request.location}`}</p>
+                {Array.isArray(donationHistory) &&
+                donationHistory.length > 0 ? (
+                  donationHistory.map((request, index) => (
+                    <div key={index}>
+                      <div
+                        className={classes.container}
+                        onClick={() => displayInformation(index)}
+                      >
+                        <div className={classes.containerDiv}>
+                          <h1>{`Donation: #${request.id}`}</h1>
+                          <p>{`Name: ${request.itemName}`}</p>
+                          <p>{`Quantity: ${request.quantity} kg`}</p>
+                          <p>{`Price: ₹${request.price}`}</p>
+                          <p>{`Expiry Date: ${request.expiryDate}`}</p>
+                        </div>
+                        <button
+                          className={classes.button}
+                          onClick={(event) =>
+                            handleFoodDelete(event, request.id)
+                          }
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p>No donation history available.</p>
+                )}
               </div>
             </div>
           </div>

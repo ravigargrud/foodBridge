@@ -96,15 +96,18 @@
 }
 .container button {
     background-color: #099a4f;
-    max-height: 3rem;
+    height: 2.5rem;
     cursor: pointer;
     border-radius: 5px;
     padding: 0.5rem;
+    display: inline-block;
+    align-self: center;
 }
 .containerDiv {
     display: flex;
     flex-direction: column;
     flex:1;
+    margin-top: 10px;
 }
 
 /*Donation*/
