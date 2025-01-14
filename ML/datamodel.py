@@ -52,7 +52,6 @@ class restaurantModel(BaseModel):
     foodItems: str
 
 class foodItemModel(BaseModel):
-    id: int
     itemName: str
     quantity: int
     expiryDate: str
