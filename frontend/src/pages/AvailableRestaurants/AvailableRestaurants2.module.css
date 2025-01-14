@@ -1,0 +1,186 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap; /* Ensures wrapping of cards on smaller screens */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem; /* Added gap for spacing between cards */
+  width: 100%;
+}
+
+.card {
+  background-color: #f4f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 30%; /* Adjusted to fit better in the row */
+  padding: 1rem 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for better visual separation */
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Added hover effect for interactivity */
+}
+
+.cardBottom {
+  background-color: white;
+  min-width: 95%;
+  border-radius: 10px;
+  padding: 1rem;
+  height: auto;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.cardBottom p {
+  color: #999999;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.container h1 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.container p {
+  color: #555;
+}
+
+.container button {
+  background-color: #099a4f;
+  height: 2.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.5rem;
+  display: inline-block;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+
+.container button:hover {
+  background-color: #08743c; /* Hover effect for the delete button */
+}
+
+.containerDiv {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 10px;
+}
+
+.closeIcon {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 0.5rem 0;
+}
+
+.closeIconImg {
+  cursor: pointer;
+}
+
+.newDonation2 {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.newDonation2 .newDonationDiv {
+  background-color: #ededed;
+  height: 70%;
+  min-width: 45%;
+  padding: 0 2rem;
+  border-radius: 10px;
+}
+
+.newDonationDiv form {
+  display: flex;
+  flex-direction: column;
+}
+
+.newDonationDiv form input {
+  color: black;
+  padding: 0.5rem;
+  border: 1px solid #d7d2d2;
+  border-radius: 5px;
+}
+
+.newDonationDiv .donationType label {
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  margin: 1rem 0;
+}
+
+.newDonationDiv .donationType label input {
+  margin-left: 1rem;
+}
+
+.newDonationDiv .donationType {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wastage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: dashed 1px #d7d2d2;
+  min-height: 10rem;
+}
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card {
+    min-width: 100%;
+    margin-left: 0;
+  }
+
+  .cardBottom {
+    height: auto;
+    margin-top: 1rem;
+  }
+
+  .container button {
+    width: 100%; /* Make the button take full width on mobile */
+    margin-top: 1rem;
+  }
+
+  .newDonation2 .newDonationDiv {
+    min-width: 80%;
+    padding: 1rem;
+  }
+
+  .containerDiv {
+    margin-top: 1rem; /* Ensure proper spacing for smaller screens */
+  }
+}
+
+@media (min-width: 1440px) {
+  .main {
+    padding: 0 5rem;
+  }
+}

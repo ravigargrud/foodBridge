@@ -211,8 +211,8 @@ const DonationRequests = () => {
         <div className={classes.main}>
           <TopNavbar
             showNavbar={true}
-            userName={"Username"}
-            location={`Location: ${currUser?.restaurantName}`}
+            userName={`Username: ${currUser?.restaurantName}`}
+            location={`Location`}
           />
           <SideNavbar showNavbar={true} />
           <div className={classes.cards}>
@@ -254,8 +254,7 @@ const DonationRequests = () => {
                 </p>
               </div>
               <div className={classes.cardBottom}>
-                {Array.isArray(donationHistory) &&
-                donationHistory.length > 0 ? (
+                {donationHistory && donationHistory.length > 0 ? (
                   donationHistory.map((request, index) => (
                     <div key={index}>
                       <div
@@ -281,7 +280,7 @@ const DonationRequests = () => {
                     </div>
                   ))
                 ) : (
-                  <p>No donation history available.</p>
+                  <h1>No donation history available.</h1>
                 )}
               </div>
             </div>

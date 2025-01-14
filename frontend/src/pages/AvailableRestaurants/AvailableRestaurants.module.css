@@ -10,20 +10,36 @@
 
 .main {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
-    flex-direction: column;
+    flex-direction: row;
     background-image: url('../../assets/images/landingpage/signup.png');
     background-size: cover;
     background-repeat: no-repeat;
+    padding: 2rem;
 }
 
 .main .cardContainer {
     align-self: flex-start;
     margin-left: 15rem;
     margin-top: 5rem;
-    height: 75%;
+    height: 80%;
+    background-color: #f4f6f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+
+.main .cardContainer2 {
+    align-self: flex-start;
+    margin-left: 15rem;
+    margin-top: 5rem;
+    height: 80%;
+    flex: 1;
+    margin-right: 4rem;
     background-color: #f4f6f6;
     display: flex;
     flex-direction: column;
@@ -31,6 +47,7 @@
     padding: 1rem;
 
 }
+
 .main .cardContainer .card {
     max-width: 95%;
     border-radius: 10px;
@@ -73,4 +90,12 @@ h1,p {
     border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-height: 100vh;
+    max-width: 100vw;
 }
