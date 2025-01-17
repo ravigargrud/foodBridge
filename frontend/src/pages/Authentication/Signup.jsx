@@ -29,6 +29,7 @@ const Signup = () => {
                   password: "",
                   area: "",
                   predictedWaste: 0,
+                  currentWaste: 0,
                   foodBankPending: "place",
                   restaurantName: "",
                   email: "",
@@ -152,13 +153,50 @@ const Signup = () => {
                     )}
                     {!existingUser && (
                         <div className={classes.formContainer}>
-                            {/* <GooglePlacesAutocomplete
+                            <GooglePlacesAutocomplete
                                 apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
                                 selectProps={{
                                     destination: formData.area,
                                     onChange: handleAreaChange,
+                                    placeholder: "Area",
+                                    styles: {
+                                        control: (baseStyles) => ({
+                                            ...baseStyles,
+                                            backgroundColor: "white",
+                                            width: "100%",
+                                            color: "black",
+                                            borderRadius: "5px",
+                                            border: "1px solid rgb(150, 145, 145)",
+                                            marginTop: "10px",
+                                            fontSize: "16px",
+                                        }),
+                                        input: (baseStyles) => ({
+                                            ...baseStyles,
+                                            color: "black",
+                                        }),
+                                        placeholder: (baseStyles) => ({
+                                            ...baseStyles,
+                                            color: "grey",
+                                        }),
+                                        menu: (baseStyles) => ({
+                                            ...baseStyles,
+                                            backgroundColor: "white",
+                                            borderRadius: "5px",
+                                            border: "1px solid rgb(150, 145, 145)",
+                                        }),
+                                        option: (baseStyles, { isFocused, isSelected }) => ({
+                                            ...baseStyles,
+                                            color: isSelected ? "white" : "black", // White text for selected, black for others
+                                            backgroundColor: isFocused
+                                                ? "rgb(220, 220, 220)" // Light grey for focused
+                                                : isSelected
+                                                ? "rgb(100, 100, 100)" // Dark grey for selected
+                                                : "white", // White for others
+                                            cursor: "pointer",
+                                        }),                                    
+                                    },
                                 }}
-                            /> */}
+                            />
                         </div>
                     )}
                     <div className={classes.existingUser}>

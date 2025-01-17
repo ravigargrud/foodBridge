@@ -47,6 +47,7 @@ class restaurantModel(BaseModel):
     pincode: int
     area: str
     predictedWaste: float
+    currentWaste: float
     foodBankAccepted: str
     foodBankPending: str
     foodItems: str

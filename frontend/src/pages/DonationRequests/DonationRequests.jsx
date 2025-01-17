@@ -10,17 +10,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import Time from "../../Time";
 
 import { MdOutlineClose } from "react-icons/md";
-
-const pendingDonationRequests = [
-  { name: "a", quantity: `150kg`, distance: `1.2 kms` },
-  { name: "b", quantity: `100kg`, distance: `1.5 kms` },
-  { name: "c", quantity: `250kg`, distance: `2.0 kms` },
-];
-
-const restaurant = {
-  wastage: 1000,
-  donation: 500,
-};
+import AccountDetails from "../AvailableRestaurants/AccountDetails/AccountDetails.jsx";
 
 const DonationRequests = () => {
   const [displayIndex, setDisplayIndex] = useState(null);
@@ -31,6 +21,8 @@ const DonationRequests = () => {
   const [error, setError] = useState(null);
   const [currUser, setCurrUser] = useState(null);
   const [donationHistory, setDonationHistory] = useState([]);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+
 
   const params = useParams();
 
@@ -64,7 +56,6 @@ const DonationRequests = () => {
           const history = donationRes.data.filter(
             (foodItem) => foodItem.restaurantId === user.id
           );
-          console.log(history); // Check the console to verify all food items are fetched
           setDonationHistory(history);
         }
 
@@ -102,6 +93,9 @@ const DonationRequests = () => {
       restaurant: currUser?.restaurantName,
     };
 
+    currUser.currentWaste = currUser.currentWaste + data.quantity;
+    await axios.put("http://localhost:8000/restaurant/update", currUser);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/foodItem/create",
@@ -112,7 +106,9 @@ const DonationRequests = () => {
           },
         }
       );
-      console.log("Food item created:", response.data);
+
+      (currUser.foodItems === "place")? currUser.foodItems = data.itemName : currUser.foodItems = currUser.foodItems + ", " + data.itemName;
+      await axios.put("http://localhost:8000/restaurant/update", currUser);
 
       // After creating a donation, refresh donation history
       const donationRes = await axios.get("http://localhost:8000/foodItem/get");
@@ -140,14 +136,28 @@ const DonationRequests = () => {
         `http://localhost:8000/foodItem/delete/${id}`
       );
 
+      currUser.currentWaste = currUser.currentWaste - donationHistory.find(
+        (foodItem) => foodItem.id === id
+      ).quantity;
+      await axios.put("http://localhost:8000/restaurant/update", currUser);
+
       const donationRes = await axios.get("http://localhost:8000/foodItem/get");
+      
       const history = donationRes.data.filter(
         (foodItem) => foodItem.restaurantId === currUser.id
       );
       setDonationHistory(history);
     } catch (error) {
-      console.log("Error deleting item");
+      console.log("Error deleting item" + error); 
     }
+  };
+
+  const closeAccount = () => {
+    setIsAccountOpen(false);
+  };
+
+  const openAccount = () => {
+    setIsAccountOpen(true);
   };
 
   return (
@@ -195,10 +205,10 @@ const DonationRequests = () => {
                 required
               />
               <div className={classes.wastage}>
-                <p>{`Your daily wastage = ${restaurant.wastage}kg`}</p>
-                <p>{`Today's Donations = ${restaurant.donation}kg`}</p>
+                <p>{`Your daily wastage = ${(currUser.predictedWaste).toFixed(2)}kg`}</p>
+                <p>{`Today's Donations = ${currUser.currentWaste}kg`}</p>
                 <p>{`Remaining = ${
-                  restaurant.wastage - restaurant.donation
+                  (currUser.predictedWaste - currUser.currentWaste).toFixed(2)
                 }kg`}</p>
               </div>
               <button type="submit">SUBMIT LIST</button>
@@ -212,9 +222,9 @@ const DonationRequests = () => {
           <TopNavbar
             showNavbar={true}
             userName={`Username: ${currUser?.restaurantName}`}
-            location={`Location`}
+            location={`Location: ${currUser?.area}`}
           />
-          <SideNavbar showNavbar={true} />
+          <SideNavbar showNavbar={true} setIsAccountOpen={setIsAccountOpen} />
           <div className={classes.cards}>
             <div className={classes.card}>
               <div className={classes.newDonation} onClick={makeNewDonation}>
@@ -285,6 +295,19 @@ const DonationRequests = () => {
               </div>
             </div>
           </div>
+
+          {isAccountOpen && (
+          <div className={classes.modal}>
+            <div className={classes.modalContent}>
+              <AccountDetails closeDetails={closeAccount} user={currUser} setUser={setCurrUser}/>
+              <button onClick={closeAccount} className={classes.closeButton}>
+                Close Modal
+              </button>
+            </div>
+
+          
+          </div>
+        )}
         </div>
       )}
     </div>

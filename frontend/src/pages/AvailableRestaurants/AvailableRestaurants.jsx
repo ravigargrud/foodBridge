@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import TopNavbar from "../../pages/TopNavbar/TopNavbar.jsx";
 import SideNavbar from "../SideNavbar/SideNavbar.jsx";
 import RestaurantDetails from "./RestaurantDetails/RestaurantDetails.jsx";
+import AccountDetails from "./AccountDetails/AccountDetails.jsx";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -55,6 +56,7 @@ const AvailableRestaurants = () => {
   const [currUserArea, setCurrUserArea] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [isAccountOpen, setIsAccountOpen] = useState(false); // State to control account modal visibility
 
   useEffect(() => {
     axios
@@ -119,9 +121,19 @@ const AvailableRestaurants = () => {
     setIsModalOpen(true);
   };
 
+  // Function to open the account modal
+  const openAccount = () => {
+    setIsAccountOpen(true);
+  };
+
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // Function to close the account modal
+  const closeAccount = () => {
+    setIsAccountOpen(false);
   };
 
   return (
@@ -132,7 +144,7 @@ const AvailableRestaurants = () => {
           userName={currUserName}
           location={`Location: ${currUserArea}`}
         />
-        <SideNavbar showNavbar={true} />
+        <SideNavbar showNavbar={true} setIsAccountOpen={setIsAccountOpen}/>
 
         <div className={classes.cardContainer}>
           <h1>Available Restaurants</h1>
@@ -179,7 +191,7 @@ const AvailableRestaurants = () => {
                       <p>{`Quantity: ${request.quantity} kg`}</p>
                       <p>{`Price: ₹${request.price}`}</p>
                       <p>{`Expiry Date: ${request.expiryDate}`}</p>
-                      <p>{`Restaurant Name: ${request.restaurantName}`}</p>
+                      <p>{`Restaurant Name: ${request.restaurant}`}</p>
                     </div>
                   </div>
                 </div>
@@ -193,13 +205,29 @@ const AvailableRestaurants = () => {
         {isModalOpen && (
           <div className={classes.modal}>
             <div className={classes.modalContent}>
-              <RestaurantDetails closeDetails={closeModal} />
+              {/* <RestaurantDetails closeDetails={closeModal} restaurant={data.filter(() -> {})}/> */}
+                <RestaurantDetails
+                closeDetails={closeModal}
+                restaurant={data[clickedIndex]}
+                />
               <button onClick={closeModal} className={classes.closeButton}>
                 Close Modal
               </button>
             </div>
           </div>
         )}
+
+        {isAccountOpen && (
+          <div className={classes.modal}>
+            <div className={classes.modalContent}>
+              <AccountDetails closeDetails={closeAccount} user={currUser} setUser={setCurrUser}/>
+              <button onClick={closeAccount} className={classes.closeButton}>
+                Close Modal
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

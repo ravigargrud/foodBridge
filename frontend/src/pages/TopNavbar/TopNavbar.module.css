@@ -26,9 +26,11 @@
     font-size: 1.5rem;
     font-weight: bold;
     display: flex;
+    width: 100%;
 }
 .userDetails p:last-child {
     color: #664819;
     font-size: 1rem;
     font-weight: bold;
+    width: 100%;
 }

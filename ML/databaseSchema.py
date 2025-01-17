@@ -26,6 +26,7 @@ class restaurantSchema(Base):
     pincode = Column(Integer)
     area = Column(String)
     predictedWaste = Column(Float)
+    currentWaste = Column(Float)
     foodBankAccepted = Column(String)
     foodBankPending = Column(String)
     foodItems = Column(String)
